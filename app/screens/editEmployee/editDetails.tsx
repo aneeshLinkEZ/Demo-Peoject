@@ -11,6 +11,7 @@ import { useForm, Controller } from 'react-hook-form';
 function EditDetails({ navigation, route }) {
 
     const dispatch = useAppDispatch();
+    const afterUpdate = useAppSelector((state) => state.employee.employeesList)
 
     const details = route.params?.item
     const [name, setName] = useState(details?.name);
@@ -19,10 +20,9 @@ function EditDetails({ navigation, route }) {
     const [email, setEmail] = useState(details?.email);
     const [company, setCompany] = useState(details?.company);
     const [place, setPlace] = useState(details?.place);
-    const [gender, setGender] = useState(details?.gender);
 
     const [teamOpen, setTeamOpen] = useState(false);
-    const [teamValue, setTeamValue] = useState(null)
+    const [teamValue, setTeamValue] = useState(details?.team)
 
 
 
@@ -34,18 +34,34 @@ function EditDetails({ navigation, route }) {
     ]);
 
     function updateDetails() {
-        dispatch(updateEmployeeDetails(
-            {
-                id: details?.id,
-                employeeId: details?.employeeId,
-                name: name,
-                phone: phone,
-                role: role,
-                team: team,
-                email: email,
-                company: company,
-                place: place,
-            }))
+        let updatedDetails = {
+            id: details?.id,
+            employeeId: details?.employeeId,
+            name: name,
+            phone: phone,
+            role: role,
+            team: teamValue,
+            email: email,
+            company: company,
+            place: place,
+            gender: details?.gender
+        }
+        console.log("updatedDetails", updatedDetails);
+
+        dispatch(updateEmployeeDetails({
+            id: details?.id,
+            employeeId: details?.employeeId,
+            name: name,
+            phone: phone,
+            role: role,
+            team: teamValue,
+            email: email,
+            company: company,
+            place: place,
+            gender: details?.gender
+        }))
+        console.log("afterUpdate", afterUpdate);
+
         navigation.navigate('ShowTeamDetails')
     }
 
@@ -106,7 +122,7 @@ function EditDetails({ navigation, route }) {
                     defaultValue=""
                     control={control}
                     render={({ field: { onChange, value } }) => (
-                        <View style={styles.dropdownGender}>
+                        <View style={styles.dropdownTeam}>
                             <DropDownPicker
                                 dropDownDirection="TOP"
 
@@ -117,8 +133,8 @@ function EditDetails({ navigation, route }) {
                                 setOpen={setTeamOpen}
                                 setValue={setTeamValue}
                                 setItems={setTeam}
-                                placeholder="Select Team"
-                                placeholderStyle={styles.placeholderStyles}
+                                placeholder={details?.team}
+                                // placeholderStyle={styles.placeholderStyles}
                                 // onOpen={onGenderOpen}
                                 onChangeValue={onChange}
                                 zIndex={3000}
@@ -180,11 +196,12 @@ const styles = StyleSheet.create({
     },
     textInput: {
         color: 'grey',
-        height: 40,
+        height: 45,
         margin: 12,
         borderWidth: 1,
         padding: 10,
-        width: '90%'
+        width: '89%',
+        borderRadius: 8
     },
     leftSide: {
         width: '20%'
@@ -196,7 +213,13 @@ const styles = StyleSheet.create({
     },
     dropdown: {
         flexDirection: 'row',
-        marginBottom: 10
+        marginBottom: 10,
+        width: '100%'
+    },
+    dropdownTeam: {
+        margin: 12,
+        width: "75%",
+        height: 40,
     }
 })
 
