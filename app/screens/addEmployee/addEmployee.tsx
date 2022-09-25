@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Text, ListItem } from '@rneui/themed';
-import { View, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import MyTheme from '../../theme/theme';
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { addEmployee, forDemo } from '../../slice/employee/employeeSlice';
@@ -65,136 +65,140 @@ function AddEmployee({ navigation }) {
 
     return (
         <KeyboardAvoidingView
-            style={{ margin: 10 }}
+            style={{ margin: 10, flex: 1 }}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-            <View style={styles.textInputView}>
-                <Text style={styles.leftSide}>Id</Text>
-                <TextInput
-                    style={styles.textInput}
-                    keyboardType="numeric"
-                    onChangeText={(text) => setEmployeeId(text)}
-                />
-            </View>
-            <View style={styles.textInputView}>
-                <Text style={styles.leftSide}>Name</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => setName(text)}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <ScrollView>
+                    <View style={styles.textInputView}>
+                        <Text style={styles.leftSide}>Id</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            keyboardType="numeric"
+                            onChangeText={(text) => setEmployeeId(text)}
+                        />
+                    </View>
+                    <View style={styles.textInputView}>
+                        <Text style={styles.leftSide}>Name</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(text) => setName(text)}
 
-                />
-            </View>
-            <View style={styles.textInputView}>
-                <Text style={styles.leftSide}>Phone</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => setPhone(text)}
-                    maxLength={10}
-                />
-            </View>
-            <View style={styles.textInputView}>
-                <Text style={styles.leftSide}>Email</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => setEmail(text)}
-                />
-            </View>
-            <View style={styles.textInputView}>
-                <Text style={styles.leftSide}>Company</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => setCompany(text)}
-                />
-            </View>
-            <View style={styles.dropdown}>
-                <Text style={styles.dropDownTitle}>Team</Text>
+                        />
+                    </View>
+                    <View style={styles.textInputView}>
+                        <Text style={styles.leftSide}>Phone</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(text) => setPhone(text)}
+                            maxLength={10}
+                        />
+                    </View>
+                    <View style={styles.textInputView}>
+                        <Text style={styles.leftSide}>Email</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(text) => setEmail(text)}
+                        />
+                    </View>
+                    <View style={styles.textInputView}>
+                        <Text style={styles.leftSide}>Company</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(text) => setCompany(text)}
+                        />
+                    </View>
+                    <View style={styles.dropdown}>
+                        <Text style={styles.dropDownTitle}>Team</Text>
 
-                <Controller
-                    name="gender"
-                    defaultValue=""
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <View style={styles.dropdownGender}>
-                            <DropDownPicker
-                                dropDownDirection="TOP"
+                        <Controller
+                            name="gender"
+                            defaultValue=""
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <View style={styles.dropdownGender}>
+                                    <DropDownPicker
+                                        dropDownDirection="TOP"
 
-                                style={styles.dropdown}
-                                open={teamOpen}
-                                value={teamValue} //genderValue
-                                items={team}
-                                setOpen={setTeamOpen}
-                                setValue={setTeamValue}
-                                setItems={setTeam}
-                                placeholder="Select Team"
-                                placeholderStyle={styles.placeholderStyles}
-                                // onOpen={onGenderOpen}
-                                onChangeValue={onChange}
-                                zIndex={3000}
-                                zIndexInverse={1000}
-                            />
-                        </View>
-                    )}
-                />
-            </View>
-            <View style={styles.textInputView}>
-                <Text style={styles.leftSide}>Place</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => setPlace(text)}
-                />
-            </View>
-            <View style={styles.dropdown}>
-                <Text style={styles.dropDownTitle}>Gender</Text>
+                                        style={styles.dropdown}
+                                        open={teamOpen}
+                                        value={teamValue} //genderValue
+                                        items={team}
+                                        setOpen={setTeamOpen}
+                                        setValue={setTeamValue}
+                                        setItems={setTeam}
+                                        placeholder="Select Team"
+                                        // placeholderStyle={styles.placeholderStyles}
+                                        // onOpen={onGenderOpen}
+                                        onChangeValue={onChange}
+                                        zIndex={3000}
+                                        zIndexInverse={1000}
+                                    />
+                                </View>
+                            )}
+                        />
+                    </View>
+                    <View style={styles.textInputView}>
+                        <Text style={styles.leftSide}>Place</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(text) => setPlace(text)}
+                        />
+                    </View>
+                    <View style={styles.dropdown}>
+                        <Text style={styles.dropDownTitle}>Gender</Text>
 
-                <Controller
-                    name="gender"
-                    defaultValue=""
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <View style={styles.dropdownGender}>
-                            <DropDownPicker
-                                dropDownDirection="TOP"
+                        <Controller
+                            name="gender"
+                            defaultValue=""
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <View style={styles.dropdownGender}>
+                                    <DropDownPicker
+                                        dropDownDirection="TOP"
 
-                                style={styles.dropdown}
-                                open={genderOpen}
-                                value={genderValue} //genderValue
-                                items={gender}
-                                setOpen={setGenderOpen}
-                                setValue={setGenderValue}
-                                setItems={setGender}
-                                placeholder="Select Gender"
-                                placeholderStyle={styles.placeholderStyles}
-                                // onOpen={onGenderOpen}
-                                onChangeValue={onChange}
-                                zIndex={3000}
-                                zIndexInverse={1000}
-                            />
-                        </View>
-                    )}
-                />
-            </View>
-            <View style={styles.textInputView}>
-                <Text style={styles.leftSide}>Role</Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => setRole(text)}
-                />
-            </View>
+                                        style={styles.dropdown}
+                                        open={genderOpen}
+                                        value={genderValue} //teamValue
+                                        items={gender}
+                                        setOpen={setGenderOpen}
+                                        setValue={setGenderValue}
+                                        setItems={setGender}
+                                        placeholder="Select Gender"
+                                        // placeholderStyle={styles.placeholderStyles}
+                                        // onOpen={onGenderOpen}
+                                        onChangeValue={onChange}
+                                        zIndex={3000}
+                                        zIndexInverse={1000}
+                                    />
+                                </View>
+                            )}
+                        />
+                    </View>
+                    <View style={styles.textInputView}>
+                        <Text style={styles.leftSide}>Role</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(text) => setRole(text)}
+                        />
+                    </View>
 
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Button
-                    title='Save'
-                    color={MyTheme.colors.button}
-                    onPress={() => save()}
-                    disabled={((employeeId && name && phone) === '' && (teamValue && genderValue) === null)}
-                />
-                <Button
-                    title='Clear'
-                    color={MyTheme.colors.button}
-                    onPress={() => navigation.navigate('Home')}
-                />
-            </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <Button
+                            title='Save'
+                            color={MyTheme.colors.button}
+                            onPress={() => save()}
+                            disabled={((employeeId && name && phone) === '' && (teamValue && genderValue) === null)}
+                        />
+                        <Button
+                            title='Clear'
+                            color={MyTheme.colors.button}
+                            onPress={() => navigation.navigate('Home')}
+                        />
+                    </View>
+                </ScrollView>
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     )
 }
