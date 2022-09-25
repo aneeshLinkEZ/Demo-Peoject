@@ -65,6 +65,7 @@ function AddEmployee({ navigation }) {
 
     return (
         <KeyboardAvoidingView
+            style={{ margin: 10 }}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
             <View style={styles.textInputView}>

@@ -4,7 +4,6 @@ import { View, StyleSheet, FlatList, SafeAreaView, Image, TouchableOpacity } fro
 import GridFlatList from 'grid-flatlist-react-native';
 import MyTheme from '../../theme/theme';
 import teams from './teams';
-import images from '../../images/images'
 
 
 function ShowTeamDetails({ navigation }) {

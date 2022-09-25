@@ -11,7 +11,7 @@ const teams = [
         id: 2,
         title: 'BackEnd',
         value: 'backEnd',
-        images: 'https://lpjahyqbiugcsntfpuxc.supabase.co/storage/v1/object/public/demo-images/backEnd.png?t=2022-09-23T04%3A17%3A13.595Z'
+        image: 'https://lpjahyqbiugcsntfpuxc.supabase.co/storage/v1/object/public/demo-images/backEnd.png?t=2022-09-23T04%3A17%3A13.595Z'
 
     },
     {

@@ -40,6 +40,11 @@ function ShowDetails({ navigation, route }) {
                     <Text  >{details?.item?.company}</Text>
                 </View>
                 <View style={styles.alignRow}>
+                    <Text style={{ width: 100 }}>Team</Text>
+                    <Text style={{ width: 50 }}>:</Text>
+                    <Text  >{details?.item?.team}</Text>
+                </View>
+                <View style={styles.alignRow}>
                     <Text style={{ width: 100 }}>Place</Text>
                     <Text style={{ width: 50 }}>:</Text>
                     <Text  >{details?.item?.place}</Text>
