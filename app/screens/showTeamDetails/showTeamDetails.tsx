@@ -15,10 +15,10 @@ function ShowTeamDetails({ navigation }) {
             <GridFlatList
                 data={teams}
                 renderItem={(item) => (
-                    <TouchableOpacity onPress={() => navigation.navigate('EmployeesList')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('EmployeesList', { item })}>
                         <Card containerStyle={{ paddingLeft: '10%', margin: 0, height: 250, alignItems: 'center' }}>
                             <Image
-                                source={{uri : item.image}}
+                                source={{ uri: item.image }}
                                 style={{ width: 150, height: 150 }}
                             />
                             <Text h3 style={{ textAlign: 'center' }}>{item.title}</Text>
