@@ -9,52 +9,62 @@ import { removeEmployee } from '../../slice/employee/employeeSlice';
 
 
 
-function EmployeesList({ navigation }) {
+function EmployeesList({ navigation, route }) {
+    const teamName = route.params.item.value
+    console.log("teamName  ", teamName);
 
     const [visible, setVisible] = useState(false);
 
 
     const data = useAppSelector((state) => state.employee.employeesList)
+    const employeeList = data.filter(item => item.team === teamName)
+    let count = 1
+
     const dispatch = useAppDispatch();
 
 
     const [search, setSearch] = useState("");
+    const [deleteEmployee, setDeleteEmployee] = useState()
 
     const updateSearch = (search) => {
         setSearch(search)
     }
 
-    useEffect(() => {
-    }, [])
 
-    const deleteEmployee = (item) => {
+    const toggleOverlay = () => {
+        setVisible(!visible);
+        console.log("toggleOverlay");
 
-        dispatch(removeEmployee(item))
+    };
+
+    function handleDelete(deleteDetails) {
+        dispatch(removeEmployee(deleteDetails))
+        console.log('Delete : ', deleteDetails.name)
         setVisible(!visible);
 
     }
 
-    const toggleOverlay = () => {
-        setVisible(!visible);
-    };
 
     const DeleteConfirmation = (item) => {
         return (
-            <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={{ width: '90%' }}>
+            <Overlay
+                isVisible={visible}
+                onBackdropPress={toggleOverlay}
+                overlayStyle={{ width: '90%' }}
+            >
                 <Text >Delete</Text>
                 <Text >
                     Are you sure you want to Delete
                 </Text>
                 <View style={{ flexDirection: 'row', marginTop: 20, paddingLeft: 190 }}>
                     <Button
-                        title="Delete"
-                        onPress={() => deleteEmployee(item)}
+                        title="Confirm"
+                        onPress={() => { handleDelete(deleteEmployee) }}
                         buttonStyle={{ marginRight: 10 }}
                     />
                     <Button
                         title="Cancel"
-                        onPress={toggleOverlay}
-                    />
+                        onPress={toggleOverlay} />
                 </View>
             </Overlay>
         )
@@ -62,7 +72,8 @@ function EmployeesList({ navigation }) {
 
     const renderItem = ({ item }) => {
 
-        const items = item
+        console.log("item", count += 1);
+
         return (
             <TouchableOpacity onPress={() => navigation.navigate('ShowDetails', { item })}>
                 <Card>
@@ -86,7 +97,7 @@ function EmployeesList({ navigation }) {
                                 title={'Delete'}
                                 color={MyTheme.colors.button}
                                 buttonStyle={{ width: 70 }}
-                                onPress={toggleOverlay}
+                                onPress={() => { setDeleteEmployee(item), setVisible(true) }}
                             />
                             <DeleteConfirmation item={item} />
                         </View>
@@ -100,18 +111,27 @@ function EmployeesList({ navigation }) {
 
     return (
         <SafeAreaView>
-            <SearchBar
-                style={{ height: 10 }}
-                placeholder='Type Here.....'
-                onChangeText={updateSearch}
-                value={search}
-            />
-            <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.Id}
-            />
-            <Card />
+            {employeeList.length !== 0 &&
+                <View>
+                    <SearchBar
+                        style={{ height: 10 }}
+                        placeholder='Type Here.....'
+                        onChangeText={updateSearch}
+                        value={search}
+                    />
+                    <FlatList
+                        data={employeeList}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                    />
+                </View>}
+            {employeeList.length === 0 &&
+                <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: '80%' }}>
+                    <Button
+                        title={'Add Employee'} color={MyTheme.colors.button}
+                        onPress={() => navigation.navigate('AddEmployee')}
+                    />
+                </View>}
         </SafeAreaView>)
 }
 

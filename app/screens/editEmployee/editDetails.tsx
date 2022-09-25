@@ -1,30 +1,43 @@
 import { Button } from '@rneui/base';
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TextInput, StyleSheet } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { updateEmployeeDetails } from '../../slice/employee/employeeSlice';
 import MyTheme from '../../theme/theme';
+import { useForm, Controller } from 'react-hook-form';
 
 
 function EditDetails({ navigation, route }) {
 
     const dispatch = useAppDispatch();
 
-    const details = route.params.item
+    const details = route.params?.item
     const [name, setName] = useState(details?.name);
     const [phone, setPhone] = useState(details?.phone);
     const [role, setRole] = useState(details?.role);
-    const [team, setTeam] = useState(details?.team);
     const [email, setEmail] = useState(details?.email);
     const [company, setCompany] = useState(details?.company);
     const [place, setPlace] = useState(details?.place);
     const [gender, setGender] = useState(details?.gender);
 
+    const [teamOpen, setTeamOpen] = useState(false);
+    const [teamValue, setTeamValue] = useState(null)
+
+
+
+    const [team, setTeam] = useState([
+        { label: 'FronEnd', value: 'frontEnd' },
+        { label: 'BackEnd', value: 'backEnd' },
+        { label: "Testing", value: "testing" },
+        { label: "CustomSupport", value: "customSupport" },
+    ]);
+
     function updateDetails() {
         dispatch(updateEmployeeDetails(
             {
-                id: details.id,
-                employeeId: details.employeeId,
+                id: details?.id,
+                employeeId: details?.employeeId,
                 name: name,
                 phone: phone,
                 role: role,
@@ -36,13 +49,15 @@ function EditDetails({ navigation, route }) {
         navigation.navigate('ShowTeamDetails')
     }
 
+    const { handleSubmit, control } = useForm();
+
     return (
         <ScrollView style={{ margin: 10, flex: 1 }}>
             <View style={styles.textInputView}>
                 <Text style={styles.leftSide}>Id</Text>
                 <TextInput
-                    style={styles.textInput}
-                    value={details.employeeId}
+                    style={styles?.textInput}
+                    value={details?.employeeId}
                     editable={false}
                     selectTextOnFocus={false}
                 />
@@ -81,6 +96,36 @@ function EditDetails({ navigation, route }) {
                     value={company}
                     onChangeText={(value) => setCompany(value)}
 
+                />
+            </View>
+            <View style={styles.dropdown}>
+                <Text style={styles.dropDownTitle}>Team</Text>
+
+                <Controller
+                    name="gender"
+                    defaultValue=""
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                        <View style={styles.dropdownGender}>
+                            <DropDownPicker
+                                dropDownDirection="TOP"
+
+                                style={styles.dropdown}
+                                open={teamOpen}
+                                value={teamValue} //genderValue
+                                items={team}
+                                setOpen={setTeamOpen}
+                                setValue={setTeamValue}
+                                setItems={setTeam}
+                                placeholder="Select Team"
+                                placeholderStyle={styles.placeholderStyles}
+                                // onOpen={onGenderOpen}
+                                onChangeValue={onChange}
+                                zIndex={3000}
+                                zIndexInverse={1000}
+                            />
+                        </View>
+                    )}
                 />
             </View>
             <View style={styles.textInputView}>
@@ -143,6 +188,15 @@ const styles = StyleSheet.create({
     },
     leftSide: {
         width: '20%'
+    },
+    dropDownTitle: {
+        width: '17%',
+        marginTop: 20,
+
+    },
+    dropdown: {
+        flexDirection: 'row',
+        marginBottom: 10
     }
 })
 

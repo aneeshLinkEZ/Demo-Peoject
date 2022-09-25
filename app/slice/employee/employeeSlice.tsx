@@ -16,7 +16,9 @@ export const employeeSlice = createSlice({
             state.employeesList.push(action.payload);
         },
         removeEmployee: (state, action) => {
-            const newList = state.employeesList.filter((item) => item?.id !== action.payload.item.id);
+            console.log("removeEmployee", action.payload?.name);
+
+            const newList = state.employeesList.filter((item) => item?.id !== action.payload.id);
             state.employeesList = newList;
         },
         updateEmployeeDetails: (state, action) => {
