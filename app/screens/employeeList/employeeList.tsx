@@ -111,17 +111,27 @@ function EmployeesList({ navigation, route }) {
 
     return (
         <SafeAreaView>
-            <SearchBar
-                style={{ height: 10 }}
-                placeholder='Type Here.....'
-                onChangeText={updateSearch}
-                value={search}
-            />
-            <FlatList
-                data={employeeList}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
+            {employeeList.length !== 0 &&
+                <View>
+                    <SearchBar
+                        style={{ height: 10 }}
+                        placeholder='Type Here.....'
+                        onChangeText={updateSearch}
+                        value={search}
+                    />
+                    <FlatList
+                        data={employeeList}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                    />
+                </View>}
+            {employeeList.length === 0 &&
+                <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: '80%' }}>
+                    <Button
+                        title={'Add Employee'} color={MyTheme.colors.button}
+                        onPress={() => navigation.navigate('AddEmployee')}
+                    />
+                </View>}
         </SafeAreaView>)
 }
 
