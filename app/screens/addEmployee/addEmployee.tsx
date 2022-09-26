@@ -89,6 +89,8 @@ function AddEmployee({ navigation }) {
                         <TextInput
                             style={styles.textInput}
                             onChangeText={(text) => setPhone(text)}
+                            keyboardType="numeric"
+
                             maxLength={10}
                         />
                     </View>

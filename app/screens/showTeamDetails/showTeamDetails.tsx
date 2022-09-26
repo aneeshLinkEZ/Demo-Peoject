@@ -32,7 +32,7 @@ function ShowTeamDetails({ navigation }) {
             <Button
                 title={'Show All'}
                 color={MyTheme.colors.button}
-                onPress={() => navigation.navigate('ListEmployees')}
+                onPress={() => navigation.navigate('EmployeesList')}
             />
 
         </SafeAreaView>

@@ -10,13 +10,21 @@ import { removeEmployee } from '../../slice/employee/employeeSlice';
 
 
 function EmployeesList({ navigation, route }) {
-    const teamName = route.params.item.value;
+    const teamName = route.params?.item?.value;
 
     const [visible, setVisible] = useState(false);
 
 
     const data = useAppSelector((state) => state.employee.employeesList);
-    const employeeList = data.filter(item => item.team === teamName);
+    // const [employeeList, setEmployeeList] = useState()
+    let employeeList =[]
+
+    if(teamName){
+         employeeList = data.filter(item => item.team === teamName);
+    }else{
+         employeeList = data
+    }
+
 
     const dispatch = useAppDispatch();
 
@@ -118,7 +126,7 @@ function EmployeesList({ navigation, route }) {
 
     return (
         <SafeAreaView>
-            {employeeList.length !== 0 &&
+            {employeeList?.length !== 0 &&
                 <View>
                     <SearchBar
                         style={{ height: 10 }}
@@ -132,7 +140,7 @@ function EmployeesList({ navigation, route }) {
                         keyExtractor={item => item.id}
                     />
                 </View>}
-            {employeeList.length === 0 &&
+            {employeeList?.length === 0 &&
                 <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: '80%' }}>
                     <Button
                         title={'Add Employee'} color={MyTheme.colors.button}
