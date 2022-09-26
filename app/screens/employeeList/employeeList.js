@@ -10,24 +10,29 @@ import { removeEmployee } from '../../slice/employee/employeeSlice';
 
 
 function EmployeesList({ navigation, route }) {
-    const teamName = route.params.item.value
-    console.log("teamName  ", teamName);
+    const teamName = route.params.item.value;
 
     const [visible, setVisible] = useState(false);
 
 
-    const data = useAppSelector((state) => state.employee.employeesList)
-    const employeeList = data.filter(item => item.team === teamName)
-    let count = 1
+    const data = useAppSelector((state) => state.employee.employeesList);
+    const employeeList = data.filter(item => item.team === teamName);
 
     const dispatch = useAppDispatch();
 
 
-    const [search, setSearch] = useState("");
-    const [deleteEmployee, setDeleteEmployee] = useState()
+    const [search, setSearch] = useState('');
+    const [newData, setNewData] = useState();
+    const [deleteEmployee, setDeleteEmployee] = useState();
+    let [count, setCount] = useState(0);
+
+    useEffect(() => {
+        let filterData = employeeList.filter(item => item.name.toUpperCase().includes(search.toUpperCase()))
+        setNewData(filterData);
+    },[search, count])
 
     const updateSearch = (search) => {
-        setSearch(search)
+        setSearch(search);
     }
 
 
@@ -38,11 +43,14 @@ function EmployeesList({ navigation, route }) {
     };
 
     function handleDelete(deleteDetails) {
-        dispatch(removeEmployee(deleteDetails))
-        console.log('Delete : ', deleteDetails.name)
+        setCount(count+=1)
+        dispatch(removeEmployee(deleteDetails));
+        console.log('Delete : ', deleteDetails.name);
         setVisible(!visible);
 
     }
+
+
 
 
     const DeleteConfirmation = (item) => {
@@ -72,7 +80,6 @@ function EmployeesList({ navigation, route }) {
 
     const renderItem = ({ item }) => {
 
-        console.log("item", count += 1);
 
         return (
             <TouchableOpacity onPress={() => navigation.navigate('ShowDetails', { item })}>
@@ -120,7 +127,7 @@ function EmployeesList({ navigation, route }) {
                         value={search}
                     />
                     <FlatList
-                        data={employeeList}
+                        data={newData}
                         renderItem={renderItem}
                         keyExtractor={item => item.id}
                     />

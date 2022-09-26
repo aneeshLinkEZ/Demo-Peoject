@@ -12,7 +12,7 @@ function HomeScreen({ navigation }) {
     const employeeList = useAppSelector((state) => state.employee.employeesList); 
     const dispatch = useAppDispatch();
 
-    console.log(employeeList); 
+    console.log(employeeList.length); 
 
     return (
         <View style={styles.mainView}>

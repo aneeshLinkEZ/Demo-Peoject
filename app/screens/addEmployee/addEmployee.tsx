@@ -42,7 +42,6 @@ function AddEmployee({ navigation }) {
 
     const save = () => {
         var x = Math.floor((Math.random() * 1000) + 1);
-        console.log(x);
         let data = {
             id: x,
             employeeId: employeeId,
@@ -55,7 +54,6 @@ function AddEmployee({ navigation }) {
             gender: genderValue,
             team: teamValue
         }
-        console.log(data);
         dispatch(addEmployee(data))
         navigation.navigate('Home')
 
@@ -145,6 +143,14 @@ function AddEmployee({ navigation }) {
                             onChangeText={(text) => setPlace(text)}
                         />
                     </View>
+
+                    <View style={styles.textInputView}>
+                        <Text style={styles.leftSide}>Role</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(text) => setRole(text)}
+                        />
+                    </View>
                     <View style={styles.dropdown}>
                         <Text style={styles.dropDownTitle}>Gender</Text>
 
@@ -175,14 +181,6 @@ function AddEmployee({ navigation }) {
                             )}
                         />
                     </View>
-                    <View style={styles.textInputView}>
-                        <Text style={styles.leftSide}>Role</Text>
-                        <TextInput
-                            style={styles.textInput}
-                            onChangeText={(text) => setRole(text)}
-                        />
-                    </View>
-
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                         <Button
@@ -213,6 +211,7 @@ const styles = StyleSheet.create({
         color: 'grey',
         height: 45,
         margin: 12,
+        marginTop: 15,
         borderWidth: 1,
         padding: 10,
         width: '89%',
@@ -227,9 +226,8 @@ const styles = StyleSheet.create({
         height: 40,
     },
     dropDownTitle: {
-        width: '17%',
+        width: '18%',
         marginTop: 20,
-
     },
     dropdown: {
         flexDirection: 'row',
