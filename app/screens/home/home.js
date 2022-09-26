@@ -4,7 +4,6 @@ import { Button, Text } from "@rneui/themed";
 import MyTheme from '../../theme/theme';
 import images from '../../images/images';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LineChart } from "react-native-chart-kit";
 
 function HomeScreen({ navigation }) {
@@ -17,10 +16,9 @@ function HomeScreen({ navigation }) {
     const testing = employeeList.filter(item => item.team === 'testing')
     const customSupport = employeeList.filter(item => item.team === 'customSupport')
 
-
+    const screenWidth = Dimensions.get("window").width - 50
 
     return (
-        <SafeAreaProvider>
             <ScrollView style={styles.scrollView}>
                 <View style={styles.mainView}>
                     <View>
@@ -57,7 +55,7 @@ function HomeScreen({ navigation }) {
                                     }
                                 ]
                             }}
-                            width={Dimensions.get("window").width - 50} // from react-native
+                            width={screenWidth} // from react-native
                             height={220}
                             yAxisInterval={1} // optional, defaults to 1
                             chartConfig={styles.chartConfigStyle}
@@ -68,7 +66,6 @@ function HomeScreen({ navigation }) {
 
                 </View>
             </ScrollView>
-        </SafeAreaProvider>
     )
 }
 
