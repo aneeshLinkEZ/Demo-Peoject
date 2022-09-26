@@ -16,18 +16,18 @@ function AddEmployee({ navigation }) {
     const Data = useAppSelector((state) => state.employee)
 
     const [genderOpen, setGenderOpen] = useState(false);
-    const [genderValue, setGenderValue] = useState(null);
+    const [genderValue, setGenderValue] = useState(false);
 
     const [teamOpen, setTeamOpen] = useState(false);
-    const [teamValue, setTeamValue] = useState(null)
+    const [teamValue, setTeamValue] = useState(false)
 
-    const [employeeId, setEmployeeId] = useState('');
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [role, setRole] = useState('');
-    const [email, setEmail] = useState('');
-    const [company, setCompany] = useState('');
-    const [place, setPlace] = useState('');
+    const [employeeId, setEmployeeId] = useState(false);
+    const [name, setName] = useState(false);
+    const [phone, setPhone] = useState(false);;
+    const [role, setRole] = useState(false);;
+    const [email, setEmail] = useState(false);;
+    const [company, setCompany] = useState(false);;
+    const [place, setPlace] = useState(false);;
     const [gender, setGender] = useState([
         { label: 'Male', value: 'male' },
         { label: 'Female', value: 'female' },
@@ -62,12 +62,8 @@ function AddEmployee({ navigation }) {
 
 
     return (
-        <KeyboardAvoidingView
-            style={{ margin: 10, flex: 1 }}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <ScrollView>
+  
+                <ScrollView style={{margin: 10}}>
                     <View style={styles.textInputView}>
                         <Text style={styles.leftSide}>Id</Text>
                         <TextInput
@@ -185,21 +181,20 @@ function AddEmployee({ navigation }) {
                     </View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <Button
-                            title='Save'
-                            color={MyTheme.colors.button}
-                            onPress={() => save()}
-                            disabled={((employeeId && name && phone) === '' && (teamValue && genderValue) === null)}
-                        />
-                        <Button
+                    <Button
                             title='Clear'
                             color={MyTheme.colors.button}
                             onPress={() => navigation.navigate('Home')}
                         />
+                        <Button
+                            title='Save'
+                            color={MyTheme.colors.button}
+                            onPress={() => save()}
+                            disabled={(teamValue && genderValue && employeeId && name && phone) === false}
+                        />
+
                     </View>
                 </ScrollView>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
     )
 }
 
